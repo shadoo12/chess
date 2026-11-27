@@ -24,23 +24,23 @@ void showMenu() {
          << endl << endl << "Choice: ";
 }
 void newGame(Chess *g) {
+    const char pieces[MAXN] = {'r','n','b','q','k','b','n','r'};
     (*g).current = 1;
     (*g).over = false;
-    for (int r = 0; r <= 1; r++) {
-        for (int c = 0; c < MAXN; c++) 
-            (*g).board[r][c] = 'B';
-    
-    }   
-    for (int r = 2; r <= 5; r++) {
-        for (int c = 0; c < MAXN; c++) 
+    for (int r = 0; r < MAXN; r++) 
+        for (int c = 0; c <  MAXN; c++) 
             (*g).board[r][c] = '.';
+    for (int c = 0; c <  MAXN; c++) {
+        (*g).board[0][c] = pieces[c];
+        (*g).board[1][c] = 'p';
+        (*g).board[6][c] = 'P';
+        (*g).board[7][c] = pieces[c];
+        
+    }
+        
     
-    }   
-    for (int r = 6; r < 8; r++) {
-        for (int c = 0; c < MAXN; c++) 
-            (*g).board[r][c] = 'W';
-    }     
 }
+
 void printBoard(const Chess *g) {
     using std::cout; using std::setw; using std::endl;
    
@@ -56,6 +56,15 @@ void printBoard(const Chess *g) {
         cout << setw(3) << i;
     cout << endl;
 }
+void showScores(const Chess *g) {
+    using std::cout;
+    cout << "Player 1 is at: " << (*g).score1 << " wins.\n";
+    cout << "Player 2 is at: " << (*g).score2 << " wins.\n";
+    cout << "Currently at " << (*g).draws << " amount of draws\n";
+}
+
+
+
 
 int main() {
     using std::cout; using std::cin;
@@ -70,9 +79,9 @@ int main() {
         }
         switch (choice) {
             case 1: newGame(&c); printBoard(&c); break;
-
-            case 0: cout << "Exiting"; break;
-            default: cout << "Invalid input, 0 to exit.";
+            case 4: showScores(&c); 
+            case 0: cout << "Exiting\n"; break;
+            default: cout << "Invalid input, 0 to exit.\n";
         }
     } while (choice != 0);
 
