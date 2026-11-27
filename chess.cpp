@@ -32,30 +32,34 @@ void newGame(Chess *g) {
             (*g).board[r][c] = '.';
     for (int c = 0; c <  MAXN; c++) {
         (*g).board[0][c] = pieces[c];
-        (*g).board[1][c] = 'p';
+        (*g).board[1][c] = 'p'; 
         (*g).board[6][c] = 'P';
-        (*g).board[7][c] = pieces[c];
-        
+        (*g).board[7][c] = pieces[c]; 
     }
-        
-    
+       
 }
-
 void printBoard(const Chess *g) {
     using std::cout; using std::setw; using std::endl;
-   
+    bool flip = (*g).current == 2 ? true : false;
 
     for (int i = 0; i <  MAXN; i++) {
-        cout << setw(3) << MAXN-i;
-        for (int r= 0; r < MAXN; r++) 
-            cout << setw(3) << (*g).board[i][r];
+        int j = flip ? MAXN - 1 - i : i;
+        cout << setw(3) << MAXN-j;
+
+        for (int r= 0; r < MAXN; r++) { 
+            int c = flip ? MAXN - 1 - r : r;
+            cout << setw(3) << (*g).board[j][c];
+        }
         cout << endl;
     }
     cout << setw(3) << "";
-    for (char i = 'a'; i <= 'h'; i++) 
-        cout << setw(3) << i;
+    for (int i = 0; i < MAXN; i++)  {
+        char f = flip ? 'h' - i : 'a' + i; 
+        cout << setw(3) << f;
+    }
     cout << endl;
 }
+
 void showScores(const Chess *g) {
     using std::cout;
     cout << "Player 1 is at: " << (*g).score1 << " wins.\n";
@@ -63,8 +67,10 @@ void showScores(const Chess *g) {
     cout << "Currently at " << (*g).draws << " amount of draws\n";
 }
 
+bool ParseMoves(const std::string &s, char *piece, int *targRow, int *targCol) {
+    std::string t = s;
 
-
+}
 
 int main() {
     using std::cout; using std::cin;
