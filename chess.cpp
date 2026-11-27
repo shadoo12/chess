@@ -5,7 +5,7 @@ struct Chess {
     char board[MAXN][MAXN]; 
     int current; 
     int score1; int score2; int draws; 
-    bool over; 
+    bool over; bool wK; bool wQ; bool bQ; bool bK;
 };
 bool readint(int *val) {
     using std::cin;
@@ -28,13 +28,33 @@ void newGame(Chess *g) {
     (*g).over = false;
     for (int r = 0; r <= 1; r++) {
         for (int c = 0; c < MAXN; c++) 
+            (*g).board[r][c] = 'B';
+    
+    }   
+    for (int r = 2; r <= 5; r++) {
+        for (int c = 0; c < MAXN; c++) 
             (*g).board[r][c] = '.';
     
     }   
     for (int r = 6; r < 8; r++) {
         for (int c = 0; c < MAXN; c++) 
-            (*g).board[r][c] = '.';
+            (*g).board[r][c] = 'W';
     }     
+}
+void printBoard(const Chess *g) {
+    using std::cout; using std::setw; using std::endl;
+   
+
+    for (int i = 0; i <  MAXN; i++) {
+        cout << setw(3) << MAXN-i;
+        for (int r= 0; r < MAXN; r++) 
+            cout << setw(3) << (*g).board[i][r];
+        cout << endl;
+    }
+    cout << setw(3) << "";
+    for (char i = 'a'; i <= 'h'; i++) 
+        cout << setw(3) << i;
+    cout << endl;
 }
 
 int main() {
@@ -49,8 +69,9 @@ int main() {
             cout << "Please Enter a number: ";
         }
         switch (choice) {
-            case 1: newGame(&c); break;
+            case 1: newGame(&c); printBoard(&c); break;
 
+            case 0: cout << "Exiting"; break;
             default: cout << "Invalid input, 0 to exit.";
         }
     } while (choice != 0);
